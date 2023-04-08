@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+
+  .sidebar {
+    @apply w-48 shadow h-screen bg-gray-100 dark:bg-slate-800 dark:text-white;
+  }
+
+}
