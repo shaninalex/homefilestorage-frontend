@@ -9,7 +9,6 @@ export interface AuthState {
     loading: boolean
 };
 
-
 export const initialState: AuthState = {
     loggedin: false,
     error: undefined,
