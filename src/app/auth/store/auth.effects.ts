@@ -23,11 +23,10 @@ export class AuthEffects {
         ofType(AuthActions.authLoginSuccessAction),
         tap(result => {
             localStorage.setItem("access_token", result.payload.access_token);
-            localStorage.setItem("refresh_token", result.payload.refresh_token);
             localStorage.setItem("exp", String(result.payload.exp));
-            this.router.navigate(['/app']);
+            this.router.navigate(['/home']);
         })
-    ), { dispatch: false});
+    ), { dispatch: false });
 
     registerStart$ = createEffect(() => this.actions$.pipe(
         ofType(AuthActions.authRegisterStartAction),
@@ -45,7 +44,7 @@ export class AuthEffects {
             // redirect to login page
             this.router.navigate(['/auth']);
         })
-    ), { dispatch: false});
+    ), { dispatch: false });
 
     constructor(
         private authService: AuthService,

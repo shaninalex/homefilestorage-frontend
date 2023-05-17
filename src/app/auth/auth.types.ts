@@ -5,7 +5,6 @@ export interface LoginPayload {
 
 export interface LoginSuccessPayload {
     access_token: string
-    refresh_token: string
     exp: number
 }
 
