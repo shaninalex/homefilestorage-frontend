@@ -5,14 +5,14 @@ import { on } from "@ngrx/store";
 
 
 export interface UserState {
-    user?: User
+    user: User
     error?: string
     loading: boolean
 };
 
 
 export const initialState: UserState = {
-    user: undefined,
+    user: <User>{},
     error: undefined,
     loading: false
 };

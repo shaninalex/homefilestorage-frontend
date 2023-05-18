@@ -13,12 +13,18 @@ import { TokenInterceptor } from './services/token.interceptor';
 import { reducers } from './store/reducers';
 import { FilesEffects } from './store/files/files.effects';
 import { FilesService } from './store/files/files.service';
+import { HeaderComponent } from './ui/header/header.component';
+import { AccountSettingsComponent } from './pages/account-settings/account-settings.component';
+import { FileListComponent } from './pages/file-list/file-list.component';
 
 
 @NgModule({
     declarations: [
         HomeComponent,
-        SidebarComponent
+        SidebarComponent,
+        HeaderComponent,
+        AccountSettingsComponent,
+        FileListComponent
     ],
     imports: [
         CommonModule,

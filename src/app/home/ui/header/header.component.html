@@ -1,0 +1,12 @@
+<div class="flex items-center justify-between shadow h-14 border-b border-gray-300 dark:border-gray-700 p-2 text-white">
+    <div><!-- content will be soon --></div>
+
+    <a routerLink="/home/settings" class="flex items-center" *ngIf="(user$ | async) as u">
+        <div class="mr-1">
+            {{ u.username }}
+        </div>
+        <div class="w-10 h-10 overflow-hidden rounded-full object-cover">
+            <img class="w-full h-full" src="https://cdn2.thecatapi.com/images/IFXsxmXLm.jpg" alt="">
+        </div>
+    </a>
+</div>
