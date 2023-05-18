@@ -6,6 +6,13 @@ import { HomeComponent } from './home.component';
 import { SidebarComponent } from './ui/sidebar/sidebar.component';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { UserService } from './store/user/user.service';
+import { UserEffects } from './store/user/user.effects';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { TokenInterceptor } from './services/token.interceptor';
+import { reducers } from './store/reducers';
+import { FilesEffects } from './store/files/files.effects';
+import { FilesService } from './store/files/files.service';
 
 
 @NgModule({
@@ -16,8 +23,17 @@ import { EffectsModule } from '@ngrx/effects';
     imports: [
         CommonModule,
         HomeRoutingModule,
-        StoreModule.forFeature("", {}),
-        EffectsModule.forFeature([]),
+        HttpClientModule,
+        StoreModule.forFeature("app", reducers),
+        EffectsModule.forFeature([
+            UserEffects,
+            FilesEffects,
+        ]),
+    ],
+    providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+        UserService,
+        FilesService
     ]
 })
 export class HomeModule { }

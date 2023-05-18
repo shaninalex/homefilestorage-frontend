@@ -4,7 +4,7 @@ import { StorageFile } from "../../models/files.models";
 
 export const GetFilesStart = createAction(
     "[Files] Files Start",
-    props<{ folder_id: number | null }>()
+    props<{ folder_id: number }>()
 );
 
 export const GetFilesSuccess = createAction(
