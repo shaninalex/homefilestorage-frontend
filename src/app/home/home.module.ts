@@ -16,6 +16,7 @@ import { FilesService } from './store/files/files.service';
 import { HeaderComponent } from './ui/header/header.component';
 import { AccountSettingsComponent } from './pages/account-settings/account-settings.component';
 import { FileListComponent } from './pages/file-list/file-list.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { FileListComponent } from './pages/file-list/file-list.component';
         CommonModule,
         HomeRoutingModule,
         HttpClientModule,
+        ReactiveFormsModule,
         StoreModule.forFeature("app", reducers),
         EffectsModule.forFeature([
             UserEffects,
