@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, map, of } from 'rxjs';
 import { User } from '../../models/user.models';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { UserState } from '../../store/user/user.reducer';
+import { getUserSelector } from '../../store/user/user.selectors';
 
 @Component({
     selector: 'app-account-settings',
@@ -11,14 +12,19 @@ import { UserState } from '../../store/user/user.reducer';
 })
 export class AccountSettingsComponent {
     accountForm: FormGroup = new FormGroup({
-        'email': new FormControl("", [Validators.required, Validators.email]),
-        'username': new FormControl("", [Validators.required, Validators.minLength(5)]),
+        email: new FormControl("", [Validators.required, Validators.email]),
+        username: new FormControl("", [Validators.required, Validators.minLength(5)]),
     });
 
-    user: Observable<User>;
-
     constructor(private store: Store<UserState>) {
-
+        this.store.pipe(select(getUserSelector)).subscribe({
+            next: data => {
+                if (data) {
+                    this.accountForm.controls["email"].setValue(data.email);
+                    this.accountForm.controls["username"].setValue(data.username);
+                }
+            }
+        });
     }
 
     Submit() {
