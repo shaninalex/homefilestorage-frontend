@@ -28,7 +28,7 @@ export class AccountSettingsComponent {
 
     Submit() {
         if (this.accountForm.valid && this.accountForm.touched) {
-            this.store.dispatch(PatchUser(this.accountForm.value));
+            this.store.dispatch(PatchUser({ user: this.accountForm.value }));
         }
     }
 }
