@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { BehaviorSubject, Observable, map, of } from 'rxjs';
-import { User } from '../../models/user.models';
 import { Store, select } from '@ngrx/store';
 import { UserState } from '../../store/user/user.reducer';
 import { getUserSelector } from '../../store/user/user.selectors';
+import { PatchUser } from '../../store/user/user.actions';
 
 @Component({
     selector: 'app-account-settings',
@@ -28,8 +27,8 @@ export class AccountSettingsComponent {
     }
 
     Submit() {
-        if (this.accountForm.valid) {
-            console.log(this.accountForm.value);
+        if (this.accountForm.valid && this.accountForm.touched) {
+            this.store.dispatch(PatchUser(this.accountForm.value));
         }
     }
 }

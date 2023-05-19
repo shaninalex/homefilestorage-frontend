@@ -17,9 +17,11 @@ export const initialState: UserState = {
     loading: false
 };
 
+
 export const userReducer = createReducer(
     initialState,
-    on(UserActions.GetUserStart, (state, action) => ({ ...state, loading: true })),
+    on(UserActions.GetUserStart, (state, _) => ({ ...state, loading: true })),
     on(UserActions.GetUserError, (state, action) => ({ ...state, loading: false, error: action.error })),
-    on(UserActions.GetUserSuccess, (state, action) => ({ loading: false, error: undefined, user: action.user })),
+    on(UserActions.GetUserSuccess, (_, action) => ({ loading: false, error: undefined, user: action.user })),
+    on(UserActions.PatchUser, (state, action) => ({...state, user: {...state.user, ...action.user}})),
 );

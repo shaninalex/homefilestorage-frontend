@@ -15,4 +15,10 @@ export class UserService {
             shareReplay()
         )
     }
+
+    patchAccount(user: User): Observable<User> {
+        return this.http.patch<User>("/api/v2/account", user).pipe(
+            shareReplay()
+        );
+    }
 }

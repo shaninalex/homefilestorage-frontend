@@ -13,7 +13,7 @@ def login():
     )
 
 
-@app.route("/api/v2/account", methods=["GET"])
+@app.route("/api/v2/account", methods=["GET", "PATCH"])
 def account():
     return jsonify(
         {
