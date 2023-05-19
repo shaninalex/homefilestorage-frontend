@@ -19,6 +19,17 @@ export class UserEffects {
         )
     ));
 
+    userPatch$ = createEffect(() => this.actions$.pipe(
+        ofType(UserActions.PatchUser),
+        exhaustMap(action =>
+            this.userService.patchAccount(action.user).pipe(
+                map(() => UserActions.PatchUserSuccess()),
+                catchError(error => of(UserActions.GetUserError({ error: "Unable to get account details login." })))
+            )
+        )
+    ));
+
+
     constructor(
         private userService: UserService,
         private actions$: Actions

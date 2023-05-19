@@ -6,6 +6,7 @@
     <input type="email" placeholder="Email" class="block border rounded w-full bg-transparent p-2 mb-4"
         formControlName="email" />
 
-    <button type="submit" class="inline-block border rounded bg-transparent py-2 px-8">Save</button>
+    <button type="submit" class="inline-block border rounded bg-transparent py-2 px-8 disabled:opacity-75"
+        [disabled]="!accountForm.valid">Save</button>
 
 </form>
