@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
+/* @layer components {
+} */
 
+input.ng-invalid {
+    @apply border-red-500;
 }

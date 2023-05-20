@@ -1,12 +1,28 @@
 <form [formGroup]="accountForm" (ngSubmit)="Submit()" class="max-w-md">
 
-    <input type="text" placeholder="Username" class="block border rounded w-full mb-4 bg-transparent p-2"
+    <input type="text" placeholder="Username" class="block border rounded w-full my-2 bg-transparent p-2"
         formControlName="username" />
 
-    <input type="email" placeholder="Email" class="block border rounded w-full bg-transparent p-2 mb-4"
+    <small class="block my-2"
+        *ngIf="!accountForm.get('username').valid && (accountForm.get('username').dirty || accountForm.get('username').touched)">
+        <span class="text-red-500 block" *ngIf="accountForm.get('username').errors['required']">This field is
+            required</span>
+        <span class="text-red-500 block" *ngIf="accountForm.get('username').errors['minlength']">This field is too
+            short</span>
+        <span class="text-red-500 block" *ngIf="accountForm.get('username').errors['maxlength']">This field is too
+            long</span>
+    </small>
+
+    <input type="email" placeholder="Email" class="block border rounded w-full bg-transparent p-2 my-2"
         formControlName="email" />
 
-    <button type="submit" class="inline-block border rounded bg-transparent py-2 px-8 disabled:opacity-75"
+    <small class="block my-2"
+        *ngIf="!accountForm.get('email').valid && (accountForm.get('email').dirty || accountForm.get('email').touched)">
+        <span class="text-red-500" *ngIf="accountForm.get('email').errors['required']">This field is required</span>
+        <span class="text-red-500" *ngIf="accountForm.get('email').errors['email']">Invalid email address</span>
+    </small>
+
+    <button type="submit" class="inline-block border rounded bg-transparent py-2 px-8 disabled:opacity-60"
         [disabled]="!accountForm.valid">Save</button>
 
 </form>
