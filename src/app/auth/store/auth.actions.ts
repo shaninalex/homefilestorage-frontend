@@ -2,29 +2,42 @@ import { createAction, props } from "@ngrx/store";
 import { LoginPayload, LoginSuccessPayload, RegisterPayload } from "../auth.types";
 
 
+export const verifyIdentityActionStart = createAction(
+    "[Identity] Verify Start"
+)
+
+export const verifyIdentityActionSuccess = createAction(
+    "[Identity] Verify Success"
+)
+
+export const verifyIdentityActionError = createAction(
+    "[Identity] Verify Error"
+)
+
+// Deprecated actions below
 export const authLoginStartAction = createAction(
     "[Auth] Login Start",
-    props<{payload: LoginPayload}>()
+    props<{ payload: LoginPayload }>()
 );
 
 export const authLoginErrorAction = createAction(
     "[Auth] Login Error",
-    props<{payload: string}>()
+    props<{ payload: string }>()
 );
 
 export const authLoginSuccessAction = createAction(
     "[Auth] Login Success",
-    props<{payload: LoginSuccessPayload}>()
+    props<{ payload: LoginSuccessPayload }>()
 );
 
 export const authRegisterStartAction = createAction(
     "[Auth] Register Start",
-    props<{payload: RegisterPayload}>()
+    props<{ payload: RegisterPayload }>()
 );
 
 export const authRegisterErrorAction = createAction(
     "[Auth] Register Error",
-    props<{payload: Error}>()
+    props<{ payload: Error }>()
 );
 
 export const authRegisterSuccessAction = createAction(

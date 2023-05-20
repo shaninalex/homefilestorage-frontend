@@ -9,34 +9,36 @@ import { AuthActions } from "./auth.action-types";
 @Injectable()
 export class AuthEffects {
 
-    authStart$ = createEffect(() => this.actions$.pipe(
-        ofType(AuthActions.authLoginStartAction),
-        exhaustMap(action =>
-            this.authService.login(action.payload).pipe(
-                map(access => AuthActions.authLoginSuccessAction({ payload: <LoginSuccessPayload>access })),
-                catchError(error => of(AuthActions.authLoginErrorAction({ payload: "Unable to login." })))
-            )
-        )
-    ));
+    // identityVerify$ = createEffect();
 
-    authSuccess$ = createEffect(() => this.actions$.pipe(
-        ofType(AuthActions.authLoginSuccessAction),
-        tap(result => {
-            localStorage.setItem("access_token", result.payload.access_token);
-            localStorage.setItem("exp", String(result.payload.exp));
-            this.router.navigate(['/home']);
-        })
-    ), { dispatch: false });
+    // authStart$ = createEffect(() => this.actions$.pipe(
+    //     ofType(AuthActions.authLoginStartAction),
+    //     exhaustMap(action =>
+    //         this.authService.login(action.payload).pipe(
+    //             map(access => AuthActions.authLoginSuccessAction({ payload: <LoginSuccessPayload>access })),
+    //             catchError(error => of(AuthActions.authLoginErrorAction({ payload: "Unable to login." })))
+    //         )
+    //     )
+    // ));
 
-    registerStart$ = createEffect(() => this.actions$.pipe(
-        ofType(AuthActions.authRegisterStartAction),
-        exhaustMap(action =>
-            this.authService.register(action.payload).pipe(
-                map(() => AuthActions.authRegisterSuccessAction()),
-                catchError(error => of(AuthActions.authRegisterErrorAction({ payload: error })))
-            )
-        )
-    ));
+    // authSuccess$ = createEffect(() => this.actions$.pipe(
+    //     ofType(AuthActions.authLoginSuccessAction),
+    //     tap(result => {
+    //         localStorage.setItem("access_token", result.payload.access_token);
+    //         localStorage.setItem("exp", String(result.payload.exp));
+    //         this.router.navigate(['/home']);
+    //     })
+    // ), { dispatch: false });
+
+    // registerStart$ = createEffect(() => this.actions$.pipe(
+    //     ofType(AuthActions.authRegisterStartAction),
+    //     exhaustMap(action =>
+    //         this.authService.register(action.payload).pipe(
+    //             map(() => AuthActions.authRegisterSuccessAction()),
+    //             catchError(error => of(AuthActions.authRegisterErrorAction({ payload: error })))
+    //         )
+    //     )
+    // ));
 
     registerSuccess$ = createEffect(() => this.actions$.pipe(
         ofType(AuthActions.authRegisterSuccessAction),
