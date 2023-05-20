@@ -17,6 +17,7 @@ import { HeaderComponent } from './ui/header/header.component';
 import { AccountSettingsComponent } from './pages/account-settings/account-settings.component';
 import { FileListComponent } from './pages/file-list/file-list.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FileSizePipe } from './ui/pipes/filesize.pipe';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { ReactiveFormsModule } from '@angular/forms';
         SidebarComponent,
         HeaderComponent,
         AccountSettingsComponent,
-        FileListComponent
+        FileListComponent,
+        FileSizePipe,
     ],
     imports: [
         CommonModule,

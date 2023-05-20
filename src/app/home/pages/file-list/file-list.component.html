@@ -1,1 +1,22 @@
-<p>file-list works!</p>
+<a routerLink="/home" class="py-2 px-4 border rounded mb-4 inline-block">
+    upload
+</a>
+<div *ngIf="(files | async) as files">
+    <table class="w-full">
+        <thead>
+            <tr>
+                <th class="text-left">name</th>
+                <th class="text-left">size</th>
+                <th class="text-right">uploaded</th>
+            </tr>
+        </thead>
+        <tbody>
+           <tr *ngFor="let file of files">
+               <td class="text-left">{{file.name}}</td>
+               <td class="text-left">{{file.size | filesize }}</td>
+               <td class="text-right">{{file.created_at | date}}</td>
+           </tr>
+        </tbody>
+
+    </table>
+</div>
