@@ -12,7 +12,7 @@ import { PatchUser } from '../../store/user/user.actions';
 export class AccountSettingsComponent {
     accountForm: FormGroup = new FormGroup({
         email: new FormControl("", [Validators.required, Validators.email]),
-        username: new FormControl("", [Validators.required, Validators.minLength(5)]),
+        username: new FormControl("", [Validators.required, Validators.minLength(5), Validators.maxLength(15)]),
     });
 
     constructor(private store: Store<UserState>) {
