@@ -1,20 +1,5 @@
 <div class="w-full h-screen flex items-center justify-center">
-    <form [formGroup]="loginForm" (ngSubmit)="Submit()" class="w-80">
-
-        <input type="email" class="border w-full text-center block mb-3 px-2 py-1 bg-white rounded drop-shadow"
-            placeholder="Email" formControlName="email" />
-
-        <input type="password" class="border w-full text-center block mb-3 px-2 py-1 bg-white rounded drop-shadow"
-            placeholder="Password" formControlName="password" />
-
-        <div class="text-center mb-4">
-            <button type="submit" class="cursor-pointer bg-gray-400 py-1 px-5 shadow rounded mx-auto"
-                [disabled]="!loginForm.valid">Login</button>
-        </div>
-
-        <div class="text-center text-blue-400">
-            <p><a href="#" class="text-secondary mb-0">Forgot Password</a></p>
-            <p><a href="#" class="text-secondary mb-0">Register</a></p>
-        </div>
-    </form>
+    <div class="text-center text-blue-400">
+        <a href="{{ auth_url }}">Login</a>
+    </div>
 </div>
