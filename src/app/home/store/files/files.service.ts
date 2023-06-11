@@ -14,7 +14,7 @@ export class FilesService {
     getFilesList(folder_id: number = 0): Observable<{ "files": StorageFile[] }> {
         const query_params = new HttpParams()
         query_params.append("folder_id", folder_id);
-        return this.http.get<{ "files": StorageFile[] }>("/api/v2/files", { params: query_params }).pipe(
+        return this.http.get<{ "files": StorageFile[] }>("/api/v2/files/list", { params: query_params }).pipe(
             shareReplay()
         )
     }

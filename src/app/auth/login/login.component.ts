@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AuthState } from '../store/auth.reducer';
-import { environment } from 'src/environments/environment';
 import { AuthService } from '../auth.service';
 
 
@@ -11,20 +10,21 @@ import { AuthService } from '../auth.service';
 })
 export class LoginComponent {
 
-    auth_url: string = `${environment.AUTH_SERVER_LOGIN}/login`;
-
     constructor(
         private store: Store<AuthState>,
         private authService: AuthService
     ) {
-        this.checkCookie();
-    }
-
-    checkCookie() {
-        this.authService.verify_identity().subscribe({
-            next: data => {
+        const data = this.authService.verify_identity();
+        data.subscribe({
+            next: (data) => {
                 console.log(data);
+            },
+            error: (err) => {
+                if (err.status == 401) {
+                    window.location.href = "http://127.0.0.1:4455/login"
+                }
             }
         })
+        // TODO: Save data to store
     }
 }
