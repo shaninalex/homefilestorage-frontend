@@ -3,31 +3,15 @@ from flask import Flask, jsonify
 app = Flask(__name__)
 
 
-@app.route("/api/v2/login", methods=["POST"])
-def login():
+@app.route("/api/v2/user/info", methods=["GET"])
+def user_info():
     return jsonify(
-        {
-            "access_token": "eyJhbGciOiJIUzI1NiIsImtpZCI6InNpbTIifQ.eyJhdWQiOiJodHRwOi8vYXBpLmV4YW1wbGUuY29tIiwiZXhwIjoxNjg0MjE4MzAzLCJpc3MiOiJodHRwczovL2tyYWtlbmQuaW8iLCJqdGkiOiJiZDg5MzdkMTA1Y2ViNDMzNGE3ZDZhMmNkNzcxM2M4YjNkMzJkMyIsInJvbGVzIjpbInVzZXIiLCJhZG1pbiJdLCJzdWIiOiIxIn0.tHrdjSmpzz9YW1BnJMEH-NSp2b1u9WHMhzs_SBR0iDk",
-            "exp": 1684218303,
-        }
+        {"email": "test@test.com", "name": {"first": "Firstname", "last": "Lastname"}},
     )
 
 
-@app.route("/api/v2/account", methods=["GET", "PATCH"])
-def account():
-    return jsonify(
-        {
-            "active": True,
-            "created_at": "2023-05-16T06:09:59.849438Z",
-            "email": "test2@test.com",
-            "id": 1,
-            "username": "test2",
-        },
-    )
-
-
-@app.route("/api/v2/files", methods=["GET"])
-def files():
+@app.route("/api/v2/files/list", methods=["GET"])
+def file_list():
     return jsonify(
         {
             "files": [
@@ -41,7 +25,7 @@ def files():
                     "owner": 1,
                     "public": True,
                     "size": 113860,
-                    "system_path": "/files/2023/5/16/1684220265.pdf"
+                    "system_path": "/files/2023/5/16/1684220265.pdf",
                 }
             ]
         },
