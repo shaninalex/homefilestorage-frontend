@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { AuthState } from '../store/auth.reducer';
 import { AuthService } from '../auth.service';
 
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-login',
@@ -21,10 +22,9 @@ export class LoginComponent {
             },
             error: (err) => {
                 if (err.status == 401) {
-                    window.location.href = "http://127.0.0.1:4455/login"
+                    window.location.href = `${environment.AUTH_SERVER_LOGIN}/login`
                 }
             }
         })
-        // TODO: Save data to store
     }
 }
