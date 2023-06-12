@@ -17,7 +17,7 @@ import { HttpClientModule } from '@angular/common/http';
         CommonModule,
         HttpClientModule,
         AuthRoutingModule,
-        StoreModule.forFeature("auth", authReducer),
+        StoreModule.forFeature("identity", authReducer),
         EffectsModule.forFeature([AuthEffects]),
     ],
     providers: [

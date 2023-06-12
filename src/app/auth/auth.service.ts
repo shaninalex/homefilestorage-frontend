@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Observable, shareReplay } from "rxjs";
 import { HttpClient } from "@angular/common/http";
-import { environment } from "src/environments/environment";
+import { Identity } from "./auth.types";
 
 
 @Injectable()
@@ -10,8 +10,8 @@ export class AuthService {
         private http: HttpClient
     ) { }
 
-    verify_identity(): Observable<any> {
-        return this.http.get<any>("/api/v2/user/info").pipe(
+    verify_identity(): Observable<Identity> {
+        return this.http.get<Identity>("/api/v2/user/info").pipe(
             shareReplay()
         );
     }

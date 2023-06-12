@@ -1,25 +1,23 @@
 import { createReducer } from "@ngrx/store";
-import { LoginSuccessPayload } from "../auth.types";
+import { Identity } from "../auth.types";
 import { AuthActions } from "./auth.action-types";
 import { on } from "@ngrx/store";
 
 export interface AuthState {
-    loggedin?: boolean
+    identity?: Identity
     error?: string
     loading: boolean
 };
 
 export const initialState: AuthState = {
-    loggedin: false,
+    identity: undefined,
     error: undefined,
     loading: false
 };
 
 export const authReducer = createReducer(
     initialState,
-    on(AuthActions.authLoginStartAction, (state, action) => ({ ...state, loading: true })),
-    on(AuthActions.authRegisterStartAction, (state, action) => ({ ...state, loading: true })),
-    on(AuthActions.authLoginErrorAction, (state, action) => ({ loading: false, error: action.payload, loggedin: false })),
-    on(AuthActions.authLoginSuccessAction, (state, action) => ({ loading: false, error: undefined, loggedin: true })),
-    on(AuthActions.authLogoutAction, (state, action) => (initialState))
+    on(AuthActions.verifyIdentityActionStart, (state, action) => ({ ...state, loading: true })),
+    on(AuthActions.verifyIdentityActionSuccess, (state, action) => ({ loading: false, error: undefined, identity: action.payload })),
+    on(AuthActions.verifyIdentityActionError, (state, action) => ({ ...state, loading: false, error: action.payload })),
 );
