@@ -15,3 +15,7 @@ export const verifyIdentityActionError = createAction(
     "[Identity] Verify Error",
     props<{ payload: string }>()
 )
+
+export const logoutIdentity = createAction(
+    "[Identity] Logout"
+)

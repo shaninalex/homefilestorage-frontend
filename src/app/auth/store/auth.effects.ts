@@ -18,6 +18,11 @@ export class AuthEffects {
         )
     ));
 
+    authError$ = createEffect(() => this.actions$.pipe(
+        ofType(AuthActions.verifyIdentityActionError),
+        tap(() => this.router.navigate())
+    ), { dispatch: false });
+
     authSuccess$ = createEffect(() => this.actions$.pipe(
         ofType(AuthActions.verifyIdentityActionSuccess),
         tap(() => this.router.navigate(['/home']))
