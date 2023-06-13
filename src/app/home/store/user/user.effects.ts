@@ -14,7 +14,7 @@ export class UserEffects {
         exhaustMap(() =>
             this.userService.getAccountDetails().pipe(
                 map((user: User) => UserActions.GetUserSuccess({ user: user })),
-                catchError(error => of(UserActions.GetUserError({ error: "Unable to get account details login." })))
+                catchError(error => of(UserActions.GetUserError({ error: `Unable to get account details login: ${error}` })))
             )
         )
     ));
@@ -24,7 +24,7 @@ export class UserEffects {
         exhaustMap(action =>
             this.userService.patchAccount(action.user).pipe(
                 map(() => UserActions.PatchUserSuccess()),
-                catchError(error => of(UserActions.GetUserError({ error: "Unable to get account details login." })))
+                catchError(error => of(UserActions.GetUserError({ error: `Unable to get account details login: ${error}` })))
             )
         )
     ));

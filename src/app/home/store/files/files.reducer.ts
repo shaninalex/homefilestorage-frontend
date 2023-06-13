@@ -8,8 +8,7 @@ export interface FilesState {
     files: StorageFile[]
     error?: string
     loading: boolean
-};
-
+}
 
 export const initialState: FilesState = {
     files: [],
@@ -19,7 +18,7 @@ export const initialState: FilesState = {
 
 export const filesReducer = createReducer(
     initialState,
-    on(FilesActions.GetFilesStart, (state, action) => ({ ...state, loading: true })),
+    on(FilesActions.GetFilesStart, (state) => ({ ...state, loading: true })),
     on(FilesActions.GetFilesError, (state, action) => ({ ...state, loading: false, error: action.error })),
-    on(FilesActions.GetFilesSuccess, (state, action) => ({ loading: false, error: undefined, files: [...initialState.files, ...action.files] })),
+    on(FilesActions.GetFilesSuccess, (state, action) => ({ ...state, loading: false, error: undefined, files: [...initialState.files, ...action.files] })),
 );

@@ -7,7 +7,7 @@ export interface AuthState {
     identity?: Identity
     error?: string
     loading: boolean
-};
+}
 
 export const initialState: AuthState = {
     identity: undefined,
@@ -17,7 +17,7 @@ export const initialState: AuthState = {
 
 export const authReducer = createReducer(
     initialState,
-    on(AuthActions.verifyIdentityActionStart, (state, action) => ({ ...state, loading: true })),
-    on(AuthActions.verifyIdentityActionSuccess, (state, action) => ({ loading: false, error: undefined, identity: action.payload })),
+    on(AuthActions.verifyIdentityActionStart, (state) => ({ ...state, loading: true })),
+    on(AuthActions.verifyIdentityActionSuccess, (state, action) => ({ ...state, loading: false, error: undefined, identity: action.payload })),
     on(AuthActions.verifyIdentityActionError, (state, action) => ({ ...state, loading: false, error: action.payload })),
 );

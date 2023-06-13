@@ -8,8 +8,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { UserService } from './store/user/user.service';
 import { UserEffects } from './store/user/user.effects';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { TokenInterceptor } from './services/token.interceptor';
+import { HttpClientModule } from '@angular/common/http';
 import { reducers } from './store/reducers';
 import { FilesEffects } from './store/files/files.effects';
 import { FilesService } from './store/files/files.service';
@@ -41,7 +40,6 @@ import { FileSizePipe } from './ui/pipes/filesize.pipe';
         ]),
     ],
     providers: [
-        { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
         UserService,
         FilesService
     ]
