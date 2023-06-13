@@ -54,9 +54,7 @@ jobs:
   restart:
     name: Restart server
     runs-on: ubuntu-latest
-    # this is last job in the list and 
-    # require to successfull complete last jobs
-    # needs: []
+    needs: [build_and_deploy_frontend]
     steps:
       - name: Checkout
         uses: actions/checkout@master
