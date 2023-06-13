@@ -1,0 +1,88 @@
+name: Push release on server
+
+on:
+  release:
+    types: [published]
+
+
+jobs:
+
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm ci
+      - run: npm run test:prod
+      - run: npm run lint
+
+  build_and_deploy_frontend:
+    runs-on: ubuntu-latest
+    needs: [test]
+    defaults:
+      run:
+        working-directory: ./frontend
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+      - run: npm install
+      - run: npm run build --if-present
+        env:
+          CI: false
+
+      # ssh deploy
+      # - name: Install SSH Key
+      #   uses: shimataro/ssh-key-action@v2
+      #   with:
+      #     key: ${{ secrets.KEY }}
+      #     known_hosts: unnecessary
+
+      # - name: Adding Known Hosts
+      #   run: ssh-keyscan -H ${{ secrets.HOST }}  >> ~/.ssh/known_hosts
+
+      # - name: Deploy backend build
+      #   run: rsync -avz ./dist/homefilestorage-frontend/* ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/home/username/frontend
+
+  restart:
+    name: Restart server
+    runs-on: ubuntu-latest
+    # this is last job in the list and 
+    # require to successfull complete last jobs
+    # needs: []
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+
+      # - name: Install SSH Key
+      #   uses: shimataro/ssh-key-action@v2
+      #   with:
+      #     key: ${{ secrets.KEY }}
+      #     known_hosts: unnecessary
+
+      # - name: Adding Known Hosts
+      #   run: ssh-keyscan -H ${{ secrets.HOST }}  >> ~/.ssh/known_hosts
+
+      # - name: Upload restart script
+      #   run: rsync -avz ./restart.sh ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/home/user/
+
+      # - name: Restarting server
+      #   uses: appleboy/ssh-action@v0.1.10
+      #   with:
+      #     host: ${{ secrets.HOST }}
+      #     username: ${{ secrets.USERNAME }}
+      #     key: ${{ secrets.KEY }}
+      #     script: /home/user/restart.sh
