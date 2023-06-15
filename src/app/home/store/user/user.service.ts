@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Observable, shareReplay } from "rxjs";
 import { HttpClient } from "@angular/common/http";
-import { User } from "../../models/user.models";
+import { User, Identity } from "../../models/user.models";
 
 
 @Injectable()
@@ -18,6 +18,12 @@ export class UserService {
 
     patchAccount(user: User): Observable<User> {
         return this.http.patch<User>("/api/v2/account", user).pipe(
+            shareReplay()
+        );
+    }
+
+    verify_identity(): Observable<Identity> {
+        return this.http.get<Identity>("/api/v2/user/info").pipe(
             shareReplay()
         );
     }

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { AuthState } from '../store/auth.reducer';
-import { AuthActions } from '../store/auth.action-types';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -10,7 +10,17 @@ import { AuthActions } from '../store/auth.action-types';
 })
 export class LoginComponent {
 
-    constructor(private store: Store<AuthState>) {
-        this.store.dispatch(AuthActions.verifyIdentityActionStart());
+    constructor(
+        private http: HttpClient,
+        private router: Router,
+    ) {
+        this.http.get<any>("/api/v2/user/check").subscribe({
+            next: () => {
+                this.router.navigate(["/home"]);
+            },
+            error: () => {
+                window.location.href = `${environment.AUTH_SERVER}/login`;
+            }
+        });
     }
 }
