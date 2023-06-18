@@ -2,10 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { AuthRoutingModule } from './auth-routing.module';
-import { EffectsModule } from '@ngrx/effects';
-import { StoreModule } from '@ngrx/store';
-import { authReducer } from './store/auth.reducer';
-import { AuthEffects } from './store/auth.effects';
 import { HttpClientModule } from '@angular/common/http';
 
 
@@ -16,11 +12,8 @@ import { HttpClientModule } from '@angular/common/http';
     imports: [
         CommonModule,
         HttpClientModule,
-        AuthRoutingModule,
-        StoreModule.forFeature("identity", authReducer),
-        EffectsModule.forFeature([AuthEffects]),
+        AuthRoutingModule
     ],
-    providers: [
-    ]
+    providers: []
 })
 export class AuthModule { }

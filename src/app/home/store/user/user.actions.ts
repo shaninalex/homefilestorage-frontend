@@ -1,27 +1,21 @@
 import { createAction, props } from "@ngrx/store";
-import { User } from "../../models/user.models";
+import { Identity } from "../../models/user.models";
 
 
-export const GetUserStart = createAction(
-    "[User] Get User Start"
-);
-
-export const GetUserSuccess = createAction(
-    "[User] Get User Success",
-    props<{ user: User }>()
-);
-
-// TODO: set global user error instead of spaming the same error for every action
-export const GetUserError = createAction(
-    "[User] Get User Error",
-    props<{ error: string }>()
-);
-
-export const PatchUser = createAction(
-    "[User] Patch",
-    props<{ user: User }>()
+export const verifyIdentityActionStart = createAction(
+    "[Identity] Verify Start"
 )
 
-export const PatchUserSuccess = createAction(
-    "[User] Patch Success"
+export const verifyIdentityActionSuccess = createAction(
+    "[Identity] Verify Success",
+    props<{ payload: Identity }>()
+)
+
+export const verifyIdentityActionError = createAction(
+    "[Identity] Verify Error",
+    props<{ payload: string }>()
+)
+
+export const logoutIdentity = createAction(
+    "[Identity] Logout"
 )

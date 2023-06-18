@@ -1,26 +1,23 @@
 import { createReducer } from "@ngrx/store";
-import { User } from "../../models/user.models";
+import { Identity } from "../../models/user.models";
 import { UserActions } from "./user.actions-types";
 import { on } from "@ngrx/store";
 
-
 export interface UserState {
-    user: User
+    identity?: Identity
     error?: string
     loading: boolean
 }
 
 export const initialState: UserState = {
-    user: <User>{},
+    identity: undefined,
     error: undefined,
     loading: false
 };
 
-
 export const userReducer = createReducer(
     initialState,
-    on(UserActions.GetUserStart, (state) => ({ ...state, loading: true })),
-    on(UserActions.GetUserError, (state, action) => ({ ...state, loading: false, error: action.error })),
-    on(UserActions.GetUserSuccess, (state, action) => ({ ...state, loading: false, error: undefined, user: action.user })),
-    on(UserActions.PatchUser, (state, action) => ({ ...state, user: { ...state.user, ...action.user } })),
+    on(UserActions.verifyIdentityActionStart, (state) => ({ ...state, loading: true })),
+    on(UserActions.verifyIdentityActionSuccess, (state, action) => ({ ...state, loading: false, error: undefined, identity: action.payload })),
+    on(UserActions.verifyIdentityActionError, (state, action) => ({ ...state, loading: false, error: action.payload })),
 );
