@@ -14,11 +14,11 @@ export class LoginComponent {
         private http: HttpClient,
         private router: Router,
     ) {
-        this.http.get<any>("/api/v2/user/check").subscribe({
-            next: () => {
+        this.http.get<any>("/api/v2/user/info").subscribe({
+            next: data => {
                 this.router.navigate(["/home"]);
             },
-            error: () => {
+            error: err => {
                 window.location.href = `${environment.AUTH_SERVER}/login`;
             }
         });

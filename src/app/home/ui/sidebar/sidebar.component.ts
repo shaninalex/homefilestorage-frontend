@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../store/reducers';
-import { logoutIdentity } from '../../store/user/user.actions';
+import { environment } from "../../../../environments/environment";
+
 
 @Component({
     selector: 'app-sidebar',
@@ -9,9 +8,5 @@ import { logoutIdentity } from '../../store/user/user.actions';
 })
 export class SidebarComponent {
 
-    constructor(private store: Store<AppState>) { }
-
-    logout(): void {
-        this.store.dispatch(logoutIdentity());
-    }
+    account_link: string = environment.AUTH_SERVER;
 }
