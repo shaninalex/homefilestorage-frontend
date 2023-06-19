@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class FileUploadService {
     private socket: WebSocket;
 
     uploadFile(file: File): Observable<number> {
-        this.socket = new WebSocket('ws://localhost:8080/ws/upload'); // Replace with your server WebSocket URL
+        this.socket = new WebSocket(environment.FILE_UPLOADER_SOCKET);
 
-        const chunkSize = 1024 * 1024; // Adjust the chunk size as needed
+        const chunkSize = 1024 * 1024;
         const totalChunks = Math.ceil(file.size / chunkSize);
         let currentChunk = 0;
 
