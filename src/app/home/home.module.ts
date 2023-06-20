@@ -18,11 +18,13 @@ import { FileListComponent } from './pages/file-list/file-list.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FileSizePipe } from './ui/pipes/filesize.pipe';
 import { FileUploadService } from './services/file-upload.service';
+import { UploadComponent } from './pages/upload/upload.component';
 
 
 @NgModule({
     declarations: [
         HomeComponent,
+        UploadComponent,
         SidebarComponent,
         HeaderComponent,
         AccountSettingsComponent,
