@@ -1,4 +1,5 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
+import simple_websocket
 
 app = Flask(__name__)
 
@@ -30,6 +31,19 @@ def file_list():
             ]
         },
     )
+
+
+@app.route('/ws/upload', websocket=True)
+def echo():
+    ws = simple_websocket.Server(request.environ)
+    try:
+        while True:
+            data = ws.receive()
+            ws.send(data)
+            print(data)
+    except simple_websocket.ConnectionClosed:
+        pass
+    return ''
 
 
 if __name__ == "__main__":
