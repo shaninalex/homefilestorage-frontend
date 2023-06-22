@@ -2,13 +2,15 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
-@Injectable()
+
+@Injectable({
+    providedIn: 'root'
+})
 export class FileUploadService {
     private socket: WebSocket;
 
     uploadFile(file: File): Observable<number> {
         this.socket = new WebSocket(environment.FILE_UPLOADER_SOCKET);
-
         const chunkSize = 1024 * 1024;
         const totalChunks = Math.ceil(file.size / chunkSize);
         let currentChunk = 0;
@@ -19,7 +21,9 @@ export class FileUploadService {
 
                 reader.onload = () => {
                     if (reader.readyState === 2) {
-                        this.socket.send(reader.result as ArrayBuffer);
+                        const chunkArrayBuffer = reader.result as ArrayBuffer;
+                        const chunkText = this.arrayBufferToText(chunkArrayBuffer);
+                        this.socket.send(chunkText);
                         currentChunk++;
 
                         if (currentChunk < totalChunks) {
@@ -34,9 +38,7 @@ export class FileUploadService {
                     }
                 };
 
-                const start = currentChunk * chunkSize;
-                const end = Math.min(start + chunkSize, file.size);
-                const chunk = file.slice(start, end);
+                const chunk = file.slice(0, chunkSize); // Read the initial chunk
                 reader.readAsArrayBuffer(chunk);
             };
 
@@ -49,5 +51,10 @@ export class FileUploadService {
                 observer.error(error);
             };
         });
+    }
+
+    private arrayBufferToText(buffer: ArrayBuffer): string {
+        const decoder = new TextDecoder();
+        return decoder.decode(buffer);
     }
 }
