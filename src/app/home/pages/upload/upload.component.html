@@ -1,13 +1,4 @@
-<form [formGroup]="uploadForm" (ngSubmit)="Submit()">
-    <div class="mb-4">
-        <input type="file" name="file" id="file" formControlName="file" />
-    </div>
-
-    <div>
-        <button type="submit" 
-            [disabled]="!uploadForm.valid"
-            class="py-2 px-4 border rounded mb-4 inline-block">
-            Upload
-        </button>
-    </div>
+<form [formGroup]="uploadForm" (ngSubmit)="uploadFile()">
+    <input type="file" formControlName="file" (change)="onFileChange($event.target.files)">
+    <button type="submit">Upload</button>
 </form>
