@@ -1,4 +1,4 @@
-<form [formGroup]="uploadForm" (ngSubmit)="uploadFile()">
-    <input type="file" formControlName="file" (change)="onFileChange($event.target.files)">
-    <button type="submit">Upload</button>
-</form>
+<dropzone-advanced 
+    [uploadAPI]="uploadApi"
+    [chunkUploadSize]="10000"
+></dropzone-advanced>
