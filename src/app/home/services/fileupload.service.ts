@@ -7,9 +7,7 @@ import { Observable } from "rxjs";
 export class FileUploadService {
     private uploadUrl = "/api/v2/files/upload";
 
-    constructor(private http: HttpClient) {
-
-    }
+    constructor(private http: HttpClient) {}
 
     uploadFile(file: File): Observable<any> {
         const headers = new HttpHeaders({
@@ -17,6 +15,9 @@ export class FileUploadService {
             'Content-Disposition': `attachment; filename="${file.name}"`
         });
 
-        return this.http.post(this.uploadUrl, file, { headers });
+        return this.http.post(this.uploadUrl, file, {
+            headers: headers,
+            reportProgress: true
+        });
     }
 }

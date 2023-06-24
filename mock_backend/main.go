@@ -1,11 +1,11 @@
 package main
 
 import (
-	"io"
+	"io/ioutil"
 	"log"
+	"mime"
 	"net/http"
 	"os"
-	"path/filepath"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -51,7 +51,7 @@ func main() {
 	r := gin.Default()
 	r.GET("/api/v2/user/info", handleUserInfo)
 	r.GET("/api/v2/files/list", handleFileList)
-	r.GET("/api/v2/files/upload", handleFileUpload)
+	r.POST("/api/v2/files/upload", handleFileUpload)
 	r.Run(":8080")
 }
 
@@ -88,36 +88,25 @@ func handleUserInfo(c *gin.Context) {
 }
 
 func handleFileUpload(c *gin.Context) {
-	file, err := c.FormFile("file")
+	d, err := ioutil.ReadAll(c.Request.Body)
+	filename := handleMediaType(c.Request.Header.Get("Content-Disposition"))
 	if err != nil {
-		log.Println("Failed to get file from request:", err)
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Failed to get file from request"})
-		return
+		c.JSON(http.StatusBadRequest, gin.H{"error": "error reading input data"})
 	}
-
-	dstPath := filepath.Join(".", file.Filename)
-	dst, err := os.Create(dstPath)
+	tmpfile, err := os.Create("./" + filename)
+	defer tmpfile.Close()
 	if err != nil {
-		log.Println("Failed to create destination file:", err)
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create destination file"})
-		return
+		c.JSON(http.StatusBadRequest, gin.H{"error": "error writing file"})
 	}
-	defer dst.Close()
+	tmpfile.Write(d)
 
-	src, err := file.Open()
+	c.JSON(http.StatusOK, gin.H{"success": "file saved"})
+}
+
+func handleMediaType(header_media_type string) string {
+	_, params, err := mime.ParseMediaType(header_media_type)
 	if err != nil {
-		log.Println("Failed to open source file:", err)
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to open source file"})
-		return
+		log.Println(err)
 	}
-	defer src.Close()
-
-	_, err = io.Copy(dst, src)
-	if err != nil {
-		log.Println("Failed to save file:", err)
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save file"})
-		return
-	}
-
-	c.JSON(http.StatusOK, gin.H{"message": "File uploaded successfully"})
+	return params["filename"]
 }

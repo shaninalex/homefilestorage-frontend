@@ -17,8 +17,8 @@ import { AccountSettingsComponent } from './pages/account-settings/account-setti
 import { FileListComponent } from './pages/file-list/file-list.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FileSizePipe } from './ui/pipes/filesize.pipe';
-import { AngularDropzoneModule } from 'angular-dropzone';
 import { UploadComponent } from './pages/upload/upload.component';
+import { FileUploadService } from './services/fileupload.service';
 
 
 @NgModule({
@@ -36,7 +36,6 @@ import { UploadComponent } from './pages/upload/upload.component';
         HomeRoutingModule,
         HttpClientModule,
         ReactiveFormsModule,
-        AngularDropzoneModule,
         StoreModule.forFeature("app", reducers),
         EffectsModule.forFeature([
             UserEffects,
@@ -46,6 +45,7 @@ import { UploadComponent } from './pages/upload/upload.component';
     providers: [
         UserService,
         FilesService,
+        FileUploadService,
     ]
 })
 export class HomeModule { }
