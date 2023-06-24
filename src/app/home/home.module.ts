@@ -17,11 +17,14 @@ import { AccountSettingsComponent } from './pages/account-settings/account-setti
 import { FileListComponent } from './pages/file-list/file-list.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FileSizePipe } from './ui/pipes/filesize.pipe';
+import { UploadComponent } from './pages/upload/upload.component';
+import { FileUploadService } from './services/fileupload.service';
 
 
 @NgModule({
     declarations: [
         HomeComponent,
+        UploadComponent,
         SidebarComponent,
         HeaderComponent,
         AccountSettingsComponent,
@@ -41,7 +44,8 @@ import { FileSizePipe } from './ui/pipes/filesize.pipe';
     ],
     providers: [
         UserService,
-        FilesService
+        FilesService,
+        FileUploadService,
     ]
 })
 export class HomeModule { }
