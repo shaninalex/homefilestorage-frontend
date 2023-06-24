@@ -1,7 +1,11 @@
 package main
 
 import (
+	"io"
+	"log"
 	"net/http"
+	"os"
+	"path/filepath"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -84,5 +88,36 @@ func handleUserInfo(c *gin.Context) {
 }
 
 func handleFileUpload(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{"file": "this is test"})
+	file, err := c.FormFile("file")
+	if err != nil {
+		log.Println("Failed to get file from request:", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Failed to get file from request"})
+		return
+	}
+
+	dstPath := filepath.Join(".", file.Filename)
+	dst, err := os.Create(dstPath)
+	if err != nil {
+		log.Println("Failed to create destination file:", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create destination file"})
+		return
+	}
+	defer dst.Close()
+
+	src, err := file.Open()
+	if err != nil {
+		log.Println("Failed to open source file:", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to open source file"})
+		return
+	}
+	defer src.Close()
+
+	_, err = io.Copy(dst, src)
+	if err != nil {
+		log.Println("Failed to save file:", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save file"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "File uploaded successfully"})
 }
