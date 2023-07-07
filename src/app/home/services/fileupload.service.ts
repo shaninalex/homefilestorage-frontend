@@ -10,9 +10,10 @@ export class FileUploadService {
     constructor(private http: HttpClient) {}
 
     uploadFile(file: File): Observable<any> {
+        const filename: string = encodeURIComponent(file.name);
         const headers = new HttpHeaders({
             'Content-Type': 'application/octet-stream',
-            'Content-Disposition': `attachment; filename="${file.name}"`
+            'Content-Disposition': `attachment; filename="${filename}"`
         });
 
         return this.http.post(this.uploadUrl, file, {
