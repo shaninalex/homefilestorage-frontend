@@ -6,13 +6,21 @@
         <thead>
             <tr>
                 <th class="text-left">name</th>
+                <th class="text-left">view</th>
+                <th class="text-left">download</th>
                 <th class="text-left">size</th>
                 <th class="text-right">uploaded</th>
             </tr>
         </thead>
         <tbody>
            <tr *ngFor="let file of files">
-               <td class="text-left">{{file.name}}</td>
+                <td class="text-left">{{file.name}}</td>
+                <td class="text-left">
+                    <a class="text-green-500" href="/api/v2/files/{{file.id}}">view</a>
+                </td>
+                <td class="text-left">
+                    <a class="text-blue-500" href="/api/v2/files/{{file.id}}" download={{file.name}}>view</a>
+                </td>
                <td class="text-left">{{file.size | filesize }}</td>
                <td class="text-right">{{file.created_at | date}}</td>
            </tr>
