@@ -1,11 +1,14 @@
 import { Injectable } from "@angular/core";
 import { Observable, shareReplay } from "rxjs";
-import { HttpClient, HttpParams } from "@angular/common/http";
+import { HttpClient, HttpParams, HttpHeaders } from "@angular/common/http";
 import { StorageFile } from "../../models/files.models";
 
 
 @Injectable()
 export class FilesService {
+
+    private uploadUrl = "/api/v2/files/upload";
+
     constructor(
         private http: HttpClient
     ) { }
@@ -16,5 +19,18 @@ export class FilesService {
         return this.http.get<{ "files": StorageFile[] }>("/api/v2/files/list", { params: query_params }).pipe(
             shareReplay()
         )
+    }
+
+    uploadFile(file: File): Observable<StorageFile> {
+        const filename: string = encodeURIComponent(file.name);
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/octet-stream',
+            'Content-Disposition': `attachment; filename="${filename}"`
+        });
+
+        return this.http.post<StorageFile>(this.uploadUrl, file, {
+            headers: headers,
+            reportProgress: true
+        });
     }
 }
