@@ -18,7 +18,6 @@ import { FileListComponent } from './pages/file-list/file-list.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FileSizePipe } from './ui/pipes/filesize.pipe';
 import { UploadComponent } from './pages/upload/upload.component';
-import { FileUploadService } from './services/fileupload.service';
 
 
 @NgModule({
@@ -45,7 +44,6 @@ import { FileUploadService } from './services/fileupload.service';
     providers: [
         UserService,
         FilesService,
-        FileUploadService,
     ]
 })
 export class HomeModule { }
