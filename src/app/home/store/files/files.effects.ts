@@ -24,6 +24,27 @@ export class FilesEffects {
         )
     ));
 
+    fileUpload$ = createEffect(() => this.actions$.pipe(
+        ofType(FilesActions.SaveFileStart),
+        exhaustMap(action => {
+            this.filesService.uploadFile(action.file).pipe(
+                map(response => FilesActions.SaveFileSuccess({file: response})),
+                catchError(error => of(FilesActions.SaveFileError({error: `Unable to save file: ${error}`})))
+            )
+        })
+    ));
+
+    /*
+    {
+        next: data => {
+            console.log(data);
+        },
+        error: err => {
+            console.log(err);
+        }
+    }
+    */
+
     constructor(
         private filesService: FilesService,
         private actions$: Actions
